@@ -20,3 +20,15 @@ class SimpleDense(keras.layers.Layer):
         if self.activation is not None:
             y = self.activation(y)
         return y
+
+
+class SimpleModel:
+    def __init__(self, units, activation=None):
+        self.layer = SimpleDense(units, activation)
+
+    def predict(self, inputs):
+
+        y = self.layer(inputs)
+
+        return y
+
