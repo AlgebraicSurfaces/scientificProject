@@ -28,26 +28,7 @@ plt.show()
 
 my_model = SimpleModel(units = 1, activation=None)
 
-def square_loss(targets, predictions):
-    per_sample_losses = tf.square(targets - predictions)
-    return tf.reduce_mean(per_sample_losses)
-
-
-learning_rate = 0.1
-
-def training_step(inputs, targets):
-    with tf.GradientTape() as tape:
-        predictions = my_model.predict(inputs)
-        loss = square_loss(targets, predictions)
-    grad_loss_wrt_W, grad_loss_wrt_b = tape.gradient(loss, [my_model.layer.W, my_model.layer.b])
-    my_model.layer.W.assign_sub(grad_loss_wrt_W * learning_rate)
-    my_model.layer.b.assign_sub(grad_loss_wrt_b * learning_rate)
-    return loss
-
-
-for step in range(40):
-    loss = training_step(inputs, targets)
-    print(f"Loss at step {step}: {loss:.4f}")
+my_model.fit(inputs, targets, epoch = 40, learning_rate=0.1)
 
 predictions = my_model.predict(inputs)
 
